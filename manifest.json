@@ -1,21 +1,25 @@
 {
   "name": "New Ashapura Jewellers",
-  "short_name": "Ashapura Gold",
-  "description": "Professional gold jewelry price calculator",
-  "start_url": ".",
+  "short_name": "Ashapura",
+  "description": "Gold jewelry price calculator",
+  "start_url": "/",
   "display": "standalone",
   "theme_color": "#b8862c",
   "background_color": "#f8f0e2",
+  "orientation": "portrait",
+  "scope": "/",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "https://placehold.co/192x192/b8862c/white?text=AJ&font=montserrat",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "icon-512.png",
+      "src": "https://placehold.co/512x512/b8862c/white?text=AJ&font=montserrat",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
