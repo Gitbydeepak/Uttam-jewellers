@@ -6,11 +6,10 @@
     <meta name="theme-color" content="#b8862c">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Ashapura Gold">
+    <meta name="apple-mobile-web-app-title" content="Uttam Gold">
     <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="icon-192.png">
     <link rel="apple-touch-icon" href="icon.png">
-    <title> Uttam Jewellers | Gold Price Calculator</title>
+    <title>Uttam Jewellers | Gold Price Calculator</title>
     <style>
         * {
             margin: 0;
@@ -116,13 +115,6 @@
         .row-2cols .input-group {
             flex: 1;
             min-width: 130px;
-        }
-
-        .unit-hint {
-            font-size: 0.7rem;
-            color: #a0815b;
-            margin-top: 5px;
-            margin-left: 12px;
         }
 
         .purity-buttons {
@@ -264,11 +256,11 @@
         <div class="row-2cols">
             <div class="input-group">
                 <label>🏷️ Gold Rate (₹ / 10 grams)</label>
-                <input type="number" id="ratePer10g" class="input-field" value="72000" step="any" placeholder="e.g., 72000">
+                <input type="number" id="ratePer10g" class="input-field" value="0" step="any" placeholder="e.g., 72000">
             </div>
             <div class="input-group">
                 <label>⚖️ Weight (grams)</label>
-                <input type="number" id="weightGrams" class="input-field" value="5.000" step="any" placeholder="e.g., 1.007">
+                <input type="number" id="weightGrams" class="input-field" value="0" step="any" placeholder="e.g., 1.007">
             </div>
         </div>
 
@@ -284,7 +276,7 @@
 
         <div class="input-group">
             <label>🛠️ Making Charges (% of Gold Value)</label>
-            <input type="number" id="makingPercent" class="input-field" value="12.0" step="any" placeholder="Percentage %">
+            <input type="number" id="makingPercent" class="input-field" value="0" step="any" placeholder="Percentage %">
         </div>
 
         <div class="row-2cols">
@@ -391,27 +383,18 @@
     }
 
     function resetAll() {
-        // Reset all input fields to 0
         ratePer10gInput.value = "0";
         weightGramsInput.value = "0";
         makingPercentInput.value = "0";
         discountInput.value = "0";
         
-        // Reset purity to 24K (99.9%) as default active button
         const defaultBtn = document.querySelector('.purity-btn[data-purity="0.999"]');
         if (defaultBtn) {
             setActivePurityButton(defaultBtn, 0.999);
-        } else {
-            activePurityDecimal = 0.999;
-            purityBtns.forEach(btn => btn.classList.remove('active'));
-            if (purityBtns[0]) purityBtns[0].classList.add('active');
         }
-        
-        // Recalculate to show zero values
         calculate();
     }
 
-    // Add real-time calculation on input
     [ratePer10gInput, weightGramsInput, makingPercentInput, discountInput].forEach(el => {
         el.addEventListener('input', calculate);
         el.addEventListener('change', calculate);
@@ -419,8 +402,6 @@
 
     calcBtn.addEventListener('click', calculate);
     resetBtn.addEventListener('click', resetAll);
-    
-    // Initial calculation
     calculate();
 </script>
 </body>
