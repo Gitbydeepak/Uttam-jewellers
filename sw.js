@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ashapura-v2';
+const CACHE_NAME = 'Uttam Jewellers-v2';
 const urlsToCache = [
   '/',
   '/index.html',
