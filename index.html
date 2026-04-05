@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <meta name="theme-color" content="#b8862c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Ashapura Jewellers">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <title>New Ashapura Jewellers | Gold Price Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: linear-gradient(145deg, #f8f0e2 0%, #efe2cf 100%);
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            padding: 18px 14px 40px;
+            min-height: 100vh;
+            color: #3e2a1f;
+        }
+
+        .app-container {
+            max-width: 560px;
+            margin: 0 auto;
+            background: rgba(255, 252, 245, 0.97);
+            border-radius: 48px 32px 48px 32px;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,240,0.9);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #dbb05c, #b8862c);
+            padding: 22px 20px 18px;
+            text-align: center;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .header h1 span {
+            font-size: 1.9rem;
+        }
+
+        .shop-name {
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            margin-top: 5px;
+            opacity: 0.95;
+            font-weight: 500;
+        }
+
+        .precision-badge {
+            background: rgba(255,245,200,0.25);
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        .form-card {
+            padding: 24px 20px 16px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            color: #5a3e28;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .input-field {
+            background: #fffef7;
+            border: 1.5px solid #e2cfaa;
+            border-radius: 32px;
+            padding: 14px 18px;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #2c1d12;
+            transition: all 0.2s;
+            width: 100%;
+            outline: none;
+            font-family: 'Courier New', monospace;
+        }
+
+        .input-field:focus {
+            border-color: #c7a252;
+            box-shadow: 0 0 0 3px rgba(199, 162, 82, 0.2);
+            background: #ffffff;
+        }
+
+        .row-2cols {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .row-2cols .input-group {
+            flex: 1;
+            min-width: 130px;
+        }
+
+        .unit-hint {
+            font-size: 0.7rem;
+            color: #a0815b;
+            margin-top: 5px;
+            margin-left: 12px;
+        }
+
+        .purity-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .purity-btn {
+            background: #f4ecdf;
+            border: 1px solid #decfa8;
+            border-radius: 40px;
+            padding: 10px 18px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #5a3e28;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex: 1;
+            min-width: 70px;
+            text-align: center;
+        }
+
+        .purity-btn.active {
+            background: #c7a252;
+            border-color: #a57c3c;
+            color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 14px;
+            margin: 18px 0 12px;
+        }
+
+        .btn {
+            flex: 1;
+            background: #f0e2cf;
+            border: none;
+            padding: 12px;
+            border-radius: 40px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-primary {
+            background: #c7a252;
+            color: white;
+            box-shadow: 0 2px 6px rgba(183, 122, 32, 0.3);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.97);
+        }
+
+        .btn-secondary {
+            background: #e9dbc9;
+        }
+
+        .btn-secondary:active {
+            transform: scale(0.97);
+        }
+
+        .result-section {
+            background: #fef7e8;
+            margin: 8px 20px 24px 20px;
+            border-radius: 36px;
+            padding: 18px 20px;
+            box-shadow: inset 0 0 0 1px #fff8e7, 0 8px 20px rgba(0,0,0,0.05);
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px dashed #e2cfaa;
+            font-size: 0.95rem;
+        }
+
+        .final-price-row {
+            background: #e7d9c2;
+            margin-top: 12px;
+            padding: 16px 16px;
+            border-radius: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            font-weight: bold;
+        }
+
+        .final-price-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #b1620e;
+            letter-spacing: 1px;
+            word-break: break-word;
+            text-align: right;
+        }
+
+        .note {
+            font-size: 0.7rem;
+            text-align: center;
+            padding: 14px 20px 20px;
+            color: #8f7357;
+            border-top: 1px solid #ecdcaa;
+            background: #fffaf0;
+        }
+
+        .install-prompt {
+            background: #e7d9c2;
+            margin: 0 20px 20px;
+            padding: 12px;
+            border-radius: 32px;
+            text-align: center;
+            font-size: 0.8rem;
+            display: none;
+        }
+
+        @media (max-width: 500px) {
+            .final-price-value {
+                font-size: 1.5rem;
+            }
+            .purity-btn {
+                padding: 7px 12px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <div class="header">
+        <h1>
+            <span>⚖️💎</span> New Ashapura Jewellers
+        </h1>
+        <div class="shop-name">Since 1978 | Trust & Purity</div>
+        <div class="precision-badge">✨ Precision weight | 10g Gold Rate | Supports decimal (1.007g, 5.25g, 0.500g)</div>
+    </div>
+
+    <div class="form-card">
+        <div class="row-2cols">
+            <div class="input-group">
+                <label>🏷️ Gold Rate (₹ / 10 grams)</label>
+                <input type="number" id="ratePer10g" class="input-field" value="72000" step="any" placeholder="e.g., 72000">
+                <div class="unit-hint">Market rate per 10 grams (24K equivalent)</div>
+            </div>
+            <div class="input-group">
+                <label>⚖️ Weight (grams)</label>
+                <input type="number" id="weightGrams" class="input-field" value="5.000" step="any" placeholder="e.g., 1.007, 5.25, 0.500">
+                <div class="unit-hint">📌 Enter any decimal value — 1.007g, 2.5g, 0.125g</div>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>✨ Purity (Karat)</label>
+            <div class="purity-buttons" id="purityButtons">
+                <button type="button" data-karat="24" data-purity="0.999" class="purity-btn active">24K (99.9%)</button>
+                <button type="button" data-karat="22" data-purity="0.916" class="purity-btn">22K (91.6%)</button>
+                <button type="button" data-karat="18" data-purity="0.750" class="purity-btn">18K (75%)</button>
+                <button type="button" data-karat="14" data-purity="0.585" class="purity-btn">14K (58.5%)</button>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>🛠️ Making Charges (% of Gold Value)</label>
+            <input type="number" id="makingPercent" class="input-field" value="12.0" step="any" placeholder="Percentage %">
+        </div>
+
+        <div class="row-2cols">
+            <div class="input-group">
+                <label>🧾 GST (India)</label>
+                <input type="text" class="input-field" value="3%" disabled style="background:#f3ede3; color:#5f4a36;">
+            </div>
+            <div class="input-group">
+                <label>🏷️ Discount (%)</label>
+                <input type="number" id="discountPercent" class="input-field" value="0" step="any" placeholder="0%">
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <button id="calcBtn" class="btn btn-primary">⟳ Calculate</button>
+            <button id="resetBtn" class="btn btn-secondary">Reset All</button>
+        </div>
+    </div>
+
+    <div class="result-section" id="resultArea">
+        <div class="breakdown-item">
+            <span>🏅 Gold Value (₹)</span>
+            <span id="goldValueDisplay">₹0.00</span>
+        </div>
+        <div class="breakdown-item">
+            <span>🔨 Making Charges (₹)</span>
+            <span id="makingDisplay">₹0.00</span>
+        </div>
+        <div class="breakdown-item">
+            <span>📋 Subtotal (Gold + Making)</span>
+            <span id="subtotalDisplay">₹0.00</span>
+        </div>
+        <div class="breakdown-item">
+            <span>📈 GST Amount (3%)</span>
+            <span id="gstDisplay">₹0.00</span>
+        </div>
+        <div class="breakdown-item">
+            <span>🎁 Discount Amount</span>
+            <span id="discountAmountDisplay">₹0.00</span>
+        </div>
+        <div class="final-price-row">
+            <span class="final-price-label">💰 FINAL PAYABLE</span>
+            <span class="final-price-value" id="finalPriceDisplay">₹0.00</span>
+        </div>
+    </div>
+    <div class="note">
+        📐 Precision: weight supports any decimal | Gold per gram = (Rate per 10g)/10<br>
+        🧪 Purity: 24K=99.9%, 22K=91.6%, 18K=75%, 14K=58.5% | New Ashapura Jewellers
+    </div>
+    <div id="installMsg" class="install-prompt">
+        📱 Install this app on your phone for easy access
+    </div>
+</div>
+
+<script>
+    const ratePer10gInput = document.getElementById('ratePer10g');
+    const weightGramsInput = document.getElementById('weightGrams');
+    const purityBtns = document.querySelectorAll('.purity-btn');
+    const makingPercentInput = document.getElementById('makingPercent');
+    const discountInput = document.getElementById('discountPercent');
+    const calcBtn = document.getElementById('calcBtn');
+    const resetBtn = document.getElementById('resetBtn');
+
+    const goldValueSpan = document.getElementById('goldValueDisplay');
+    const makingSpan = document.getElementById('makingDisplay');
+    const subtotalSpan = document.getElementById('subtotalDisplay');
+    const gstSpan = document.getElementById('gstDisplay');
+    const discountAmountSpan = document.getElementById('discountAmountDisplay');
+    const finalPriceSpan = document.getElementById('finalPriceDisplay');
+
+    let activePurityDecimal = 0.999;
+
+    function setActivePurityButton(activeBtn, purityDecimal) {
+        purityBtns.forEach(btn => btn.classList.remove('active'));
+        activeBtn.classList.add('active');
+        activePurityDecimal = purityDecimal;
+    }
+
+    purityBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const purity = parseFloat(btn.getAttribute('data-purity'));
+            setActivePurityButton(btn, purity);
+            performPrecisionCalculation();
+        });
+    });
+
+    function performPrecisionCalculation() {
+        let ratePer10g = parseFloat(ratePer10gInput.value);
+        if (isNaN(ratePer10g) || ratePer10g < 0) ratePer10g = 0;
+        const ratePerGram = ratePer10g / 10;
+
+        let weightGrams = parseFloat(weightGramsInput.value);
+        if (isNaN(weightGrams) || weightGrams < 0) weightGrams = 0;
+
+        let purityDecimal = activePurityDecimal;
+
+        let goldValue = ratePerGram * purityDecimal * weightGrams;
+        goldValue = roundToDecimals(goldValue, 6);
+
+        let makingPercent = parseFloat(makingPercentInput.value);
+        if (isNaN(makingPercent)) makingPercent = 0;
+        let makingCharges = goldValue * (makingPercent / 100);
+        makingCharges = roundToDecimals(makingCharges, 6);
+
+        let subtotal = goldValue + makingCharges;
+        subtotal = roundToDecimals(subtotal, 6);
+
+        const GST_RATE = 0.03;
+        let gstAmount = subtotal * GST_RATE;
+        gstAmount = roundToDecimals(gstAmount, 6);
+
+        let amountBeforeDiscount = subtotal + gstAmount;
+
+        let discountPercent = parseFloat(discountInput.value);
+        if (isNaN(discountPercent)) discountPercent = 0;
+        let discountAmount = amountBeforeDiscount * (discountPercent / 100);
+        discountAmount = roundToDecimals(discountAmount, 6);
+
+        let finalPrice = amountBeforeDiscount - discountAmount;
+        if (finalPrice < 0) finalPrice = 0;
+        finalPrice = roundToDecimals(finalPrice, 2);
+
+        goldValueSpan.innerText = formatINR(goldValue);
+        makingSpan.innerText = formatINR(makingCharges);
+        subtotalSpan.innerText = formatINR(subtotal);
+        gstSpan.innerText = formatINR(gstAmount);
+        discountAmountSpan.innerText = formatINR(discountAmount);
+        finalPriceSpan.innerText = formatINR(finalPrice);
+    }
+
+    function roundToDecimals(value, decimals) {
+        if (isNaN(value)) return 0;
+        const factor = Math.pow(10, decimals);
+        return Math.round(value * factor) / factor;
+    }
+
+    function formatINR(value) {
+        if (isNaN(value)) return "₹0.00";
+        let rounded = roundToDecimals(value, 2);
+        return "₹" + rounded.toFixed(2);
+    }
+
+    function resetAllFields() {
+        ratePer10gInput.value = "72000";
+        weightGramsInput.value = "5.000";
+        makingPercentInput.value = "12.0";
+        discountInput.value = "0";
+        
+        const default24Btn = document.querySelector('.purity-btn[data-karat="24"]');
+        if (default24Btn) {
+            setActivePurityButton(default24Btn, 0.999);
+        } else {
+            activePurityDecimal = 0.999;
+            purityBtns.forEach(btn => btn.classList.remove('active'));
+            if (purityBtns[0]) purityBtns[0].classList.add('active');
+        }
+        
+        performPrecisionCalculation();
+    }
+
+    const realtimeInputs = [ratePer10gInput, weightGramsInput, makingPercentInput, discountInput];
+    realtimeInputs.forEach(el => {
+        el.addEventListener('input', () => performPrecisionCalculation());
+        el.addEventListener('change', () => performPrecisionCalculation());
+    });
+
+    calcBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        performPrecisionCalculation();
+    });
+
+    resetBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        resetAllFields();
+    });
+
+    function sanitizeAndRecalc() {
+        if (ratePer10gInput.value === "") ratePer10gInput.value = "0";
+        if (weightGramsInput.value === "") weightGramsInput.value = "0";
+        if (makingPercentInput.value === "") makingPercentInput.value = "0";
+        if (discountInput.value === "") discountInput.value = "0";
+        performPrecisionCalculation();
+    }
+
+    ratePer10gInput.addEventListener('blur', sanitizeAndRecalc);
+    weightGramsInput.addEventListener('blur', sanitizeAndRecalc);
+    makingPercentInput.addEventListener('blur', sanitizeAndRecalc);
+    discountInput.addEventListener('blur', sanitizeAndRecalc);
+
+    performPrecisionCalculation();
+
+    // PWA Install Prompt
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        const installMsg = document.getElementById('installMsg');
+        installMsg.style.display = 'block';
+        installMsg.style.cursor = 'pointer';
+        installMsg.onclick = async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    installMsg.style.display = 'none';
+                }
+                deferredPrompt = null;
+            }
+        };
+    });
+</script>
+</body>
+</html>
